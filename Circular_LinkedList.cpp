@@ -125,12 +125,14 @@ class CircularLinkedList{
         while(temp -> next != head){
           temp = temp -> next ;
         }
+
+        node* nodeToBeDeleted = temp -> next ;
         // point last node to second node
         temp -> next = head -> next ;
         // point head to second node
-        head = head -> next ;
-        // delete first node
-        delete temp -> next ;
+        head = head ->next ;
+        delete nodeToBeDeleted;
+
         return ;
       }
 
@@ -143,9 +145,51 @@ class CircularLinkedList{
         while(temp -> next -> next!= head){
           temp = temp -> next ;
         }
+        // delete last node
         delete temp -> next ;
+        //point second last to head
         temp -> next = head ;
         return ;
+      }
+
+      void deleteAtK(int pos ){
+        if(this -> head == NULL){
+          return ;
+        }
+        // delete at begin
+        if(pos == 0 ){
+          node* temp = head ;
+          while(temp -> next != head){
+            temp = temp -> next ;
+          }
+          node* nodeToBeDeleted = temp -> next ;
+          temp -> next = head -> next ;
+          head = head -> next ;
+          delete nodeToBeDeleted ;
+          return ;
+        }
+
+        else{
+          node* temp = head ;
+          // go to previous node to the node to be deleted
+          while((--pos > 1)){
+            // if you get to the second last node delete last node(it means position is of last node or greater)
+            if(temp -> next -> next == head){
+              delete temp -> next ;
+              temp -> next = head ;
+              break;
+            }
+            else{
+              temp = temp -> next ;
+            }
+          }
+          // we will enter this condition only if position is in the list and not the last node
+          if(pos >= 1){
+           node* nodeToBeDeleted = temp -> next ;
+           temp -> next = temp -> next -> next ;
+           delete nodeToBeDeleted ;
+         }
+        }
       }
 
     void display(){
@@ -177,5 +221,7 @@ int main(){
   cll.deleteAtBegin();
   cll.display();
   cll.deleteAtEnd();
+  cll.display();
+  cll.deleteAtK(2);
   cll.display();
 }
