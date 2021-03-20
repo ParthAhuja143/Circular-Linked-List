@@ -112,7 +112,39 @@ class CircularLinkedList{
           // point pos - 1 node to new node
           temp -> next = newNode ;
         }
-        
+
+        return ;
+      }
+
+      void deleteAtBegin(){
+        if(this -> head == NULL){
+          return ;
+        }
+
+        node* temp = head ;
+        while(temp -> next != head){
+          temp = temp -> next ;
+        }
+        // point last node to second node
+        temp -> next = head -> next ;
+        // point head to second node
+        head = head -> next ;
+        // delete first node
+        delete temp -> next ;
+        return ;
+      }
+
+      void deleteAtEnd(){
+        if(head == NULL){
+          return ;
+        }
+
+        node* temp = head ;
+        while(temp -> next -> next!= head){
+          temp = temp -> next ;
+        }
+        delete temp -> next ;
+        temp -> next = head ;
         return ;
       }
 
@@ -141,5 +173,9 @@ int main(){
   cll.insertAtTail(10);
   cll.display();
   cll.insertAtK(100 , 10);
+  cll.display();
+  cll.deleteAtBegin();
+  cll.display();
+  cll.deleteAtEnd();
   cll.display();
 }
